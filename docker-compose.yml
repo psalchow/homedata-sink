@@ -1,0 +1,5 @@
+services:
+  homedata-sink:
+    image: psalchow/homedata-sink
+    env_file:
+      - .env

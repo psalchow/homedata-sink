@@ -1,0 +1,23 @@
+{
+  "name": "homedata-sink-service",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.ts",
+  "scripts": {
+    "build": "esbuild src/index.ts --bundle --platform=node --outdir=out",
+    "prettier": "prettier -w './src/**/*.ts'",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@influxdata/influxdb-client": "^1.35.0",
+    "mqtt": "^5.10.4"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.5",
+    "esbuild": "0.25.0",
+    "prettier": "^3.5.2",
+    "typescript": "^5.7.3"
+  }
+}
