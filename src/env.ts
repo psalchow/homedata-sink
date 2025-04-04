@@ -7,10 +7,14 @@ const INFLUX_ORG = process.env["INFLUX_ORG"]!;
 /**InfluxDB bucket used in examples  */
 const INFLUX_BUCKET = process.env["INFLUX_BUCKET"]!;
 
-/** Url of the MQTT broker*/
+/** Url of the MQTT broker */
 const MQTT_BROKER_URL = process.env["MQTT_BROKER_URL"]!;
 const MQTT_USER = process.env["MQTT_USER"]!;
 const MQTT_PASSWORD = process.env["MQTT_PASSWORD"]!;
+
+/** Config of the Redis */
+const REDIS_SERVER_URL = process.env["REDIS_SERVER_URL"]!;
+const REDIS_SERVER_PASSWORD = process.env["REDIS_SERVER_PASSWORD"]!;
 
 export {
   INFLUX_URL,
@@ -20,4 +24,6 @@ export {
   MQTT_BROKER_URL,
   MQTT_USER,
   MQTT_PASSWORD,
+  REDIS_SERVER_URL,
+  REDIS_SERVER_PASSWORD,
 };

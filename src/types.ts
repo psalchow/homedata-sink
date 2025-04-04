@@ -1,6 +1,12 @@
-import { Point } from "@influxdata/influxdb-client";
+export type GenericData = {
+  at: Date;
+  measurement: string;
+  key: string;
+  tags: Record<string, string> | null;
+  fields: Record<string, string | number | boolean>;
+};
 
-export type InfluxPointsTransformer = (
+export type DataTransformer = (
   topic: string,
   message: string,
-) => Point[];
+) => { timeseries?: GenericData[]; lvc?: GenericData[] };

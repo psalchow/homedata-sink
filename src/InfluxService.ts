@@ -1,6 +1,8 @@
 import { Agent } from "http";
 import { InfluxDB, Point, WriteApi } from "@influxdata/influxdb-client";
 import { INFLUX_BUCKET, INFLUX_ORG, INFLUX_TOKEN, INFLUX_URL } from "./env";
+import { GenericData } from "./types";
+import { PRIMARY_KEY } from "./const";
 
 let keepAliveAgent: Agent | undefined;
 const getKeepAliveAgent = () => {
@@ -38,10 +40,10 @@ const getWriteApi = () => {
   return writeApi;
 };
 
-const writeMeasurement = (points: Point[]) => {
-  if (points.length > 0) {
-    console.log(`Writing ${points.length} points to Influx`);
-    getWriteApi().writePoints(points);
+const writeData = (data: GenericData[]) => {
+  if (data.length > 0) {
+    console.log(`Writing ${data.length} points to Influx`);
+    getWriteApi().writePoints(mapToPoints(data));
   } else {
     console.log(`No Points to write to Influx`);
   }
@@ -57,4 +59,33 @@ const cleanupAndClose = async () => {
   console.log("InfluxService closed");
 };
 
-export const InfluxService = { writeMeasurement, cleanupAndClose };
+const mapToPoints = (generic: GenericData[]) =>
+  generic.map((data) => {
+    const point = new Point(data.measurement);
+
+    point.timestamp(data.at).tag(PRIMARY_KEY, data.key);
+    if (data.tags) {
+      // write tags
+      Object.entries(data.tags).forEach(([tagName, tagValue]) => {
+        point.tag(tagName, tagValue);
+      });
+    }
+
+    // write fields
+    Object.entries(data.fields).forEach(([fieldName, fieldValue]) => {
+      if (typeof fieldValue == "string") {
+        point.stringField(fieldName, fieldValue);
+      } else if (typeof fieldValue == "number") {
+        if (Number.isSafeInteger(fieldValue)) {
+          point.intField(fieldName, fieldValue);
+        } else {
+          point.floatField(fieldName, fieldValue);
+        }
+      } else if (typeof fieldValue == "boolean") {
+        point.booleanField(fieldName, fieldValue);
+      }
+    });
+    return point;
+  });
+
+export const InfluxService = { writeData, cleanupAndClose };
