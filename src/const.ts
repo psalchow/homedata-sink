@@ -8,7 +8,7 @@ export const DEVICE_REGISTRY = {
   FIELD_IP: "ip-address",
 };
 
-export const TEMERATURE_DATA = {
+export const TEMPERATURE_DATA = {
   MEASUREMENT_NAME: "TemperatureData",
   TAG_DEVICE_TYPE: "device-type",
   TAG_DEVICE_NAME: "device-name",

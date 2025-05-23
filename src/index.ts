@@ -4,8 +4,6 @@ import { RedisService } from "./RedisService";
 import { DataTransformer } from "./types";
 import { WeatherStation } from "./weatherStation/transformer";
 
-WeatherStation.TOPIC_SUB;
-
 const TRANSFORMERS: Record<string, DataTransformer> = {
   [WeatherStation.TOPIC_SUB]: WeatherStation.TRANSFORMER,
 };

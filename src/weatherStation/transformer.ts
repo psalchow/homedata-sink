@@ -2,7 +2,7 @@ import { Point } from "@influxdata/influxdb-client";
 import { DataTransformer, GenericData } from "../types";
 import {
   DEVICE_REGISTRY,
-  TEMERATURE_DATA,
+  TEMPERATURE_DATA,
   WIND_DATA,
   RAIN_DATA,
   POWER_DATA,
