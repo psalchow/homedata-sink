@@ -1,4 +1,3 @@
-import { Point } from "@influxdata/influxdb-client";
 import { DataTransformer, GenericData } from "../types";
 import {
   DEVICE_REGISTRY,
@@ -72,42 +71,54 @@ const TRANSFORMER: DataTransformer = (_topic: string, message: string) => {
       [DEVICE_REGISTRY.TAG_DEVICE_MANUFACTURER]: DEVICE_MANUFACTURER,
     },
     fields: {
-      [DEVICE_REGISTRY.FIELD_IP]: measurement.ip,
-      [DEVICE_REGISTRY.FIELD_MAC]: measurement.mac,
+      [DEVICE_REGISTRY.FIELD_IP]: { string: measurement.ip },
+      [DEVICE_REGISTRY.FIELD_MAC]: { string: measurement.mac },
     },
   };
 
   const temperatureData1: GenericData = {
     at: measurementTime,
-    measurement: TEMERATURE_DATA.MEASUREMENT_NAME,
+    measurement: TEMPERATURE_DATA.MEASUREMENT_NAME,
     key: TEMP_SENSOR_1,
     tags: {
-      [TEMERATURE_DATA.TAG_DEVICE_TYPE]: DEVICE_TYPE,
-      [TEMERATURE_DATA.TAG_DEVICE_NAME]: TEMP_SENSOR_1,
-      [TEMERATURE_DATA.TAG_DEVICE_LOCATION]: "Garten",
-      [TEMERATURE_DATA.TAG_DEVICE_INOUT]: "out",
+      [TEMPERATURE_DATA.TAG_DEVICE_TYPE]: DEVICE_TYPE,
+      [TEMPERATURE_DATA.TAG_DEVICE_NAME]: TEMP_SENSOR_1,
+      [TEMPERATURE_DATA.TAG_DEVICE_LOCATION]: "Garten",
+      [TEMPERATURE_DATA.TAG_DEVICE_INOUT]: "out",
     },
     fields: {
-      [TEMERATURE_DATA.FIELD_TEMP]: parseFloat(measurement.temperature1),
-      [TEMERATURE_DATA.FIELD_HUMIDITY]: parseInt(measurement.humidity1),
-      [TEMERATURE_DATA.FIELD_DEWPOINT]: parseFloat(measurement.dewpoint1),
+      [TEMPERATURE_DATA.FIELD_TEMP]: {
+        float: parseFloat(measurement.temperature1),
+      },
+      [TEMPERATURE_DATA.FIELD_HUMIDITY]: {
+        int: parseInt(measurement.humidity1),
+      },
+      [TEMPERATURE_DATA.FIELD_DEWPOINT]: {
+        float: parseFloat(measurement.dewpoint1),
+      },
     },
   };
 
   const temperatureData2: GenericData = {
     at: measurementTime,
-    measurement: TEMERATURE_DATA.MEASUREMENT_NAME,
+    measurement: TEMPERATURE_DATA.MEASUREMENT_NAME,
     key: TEMP_SENSOR_2,
     tags: {
-      [TEMERATURE_DATA.TAG_DEVICE_TYPE]: DEVICE_TYPE,
-      [TEMERATURE_DATA.TAG_DEVICE_NAME]: TEMP_SENSOR_2,
-      [TEMERATURE_DATA.TAG_DEVICE_LOCATION]: "Garage",
-      [TEMERATURE_DATA.TAG_DEVICE_INOUT]: "out",
+      [TEMPERATURE_DATA.TAG_DEVICE_TYPE]: DEVICE_TYPE,
+      [TEMPERATURE_DATA.TAG_DEVICE_NAME]: TEMP_SENSOR_2,
+      [TEMPERATURE_DATA.TAG_DEVICE_LOCATION]: "Garage",
+      [TEMPERATURE_DATA.TAG_DEVICE_INOUT]: "out",
     },
     fields: {
-      [TEMERATURE_DATA.FIELD_TEMP]: parseFloat(measurement.temperature2),
-      [TEMERATURE_DATA.FIELD_HUMIDITY]: parseInt(measurement.humidity2),
-      [TEMERATURE_DATA.FIELD_DEWPOINT]: parseFloat(measurement.dewpoint2),
+      [TEMPERATURE_DATA.FIELD_TEMP]: {
+        float: parseFloat(measurement.temperature2),
+      },
+      [TEMPERATURE_DATA.FIELD_HUMIDITY]: {
+        int: parseInt(measurement.humidity2),
+      },
+      [TEMPERATURE_DATA.FIELD_DEWPOINT]: {
+        float: parseFloat(measurement.dewpoint2),
+      },
     },
   };
 
@@ -121,9 +132,9 @@ const TRANSFORMER: DataTransformer = (_topic: string, message: string) => {
       [WIND_DATA.TAG_DEVICE_LOCATION]: "Garten",
     },
     fields: {
-      [WIND_DATA.FIELD_WINDSPEED]: parseInt(measurement.windspeed),
-      [WIND_DATA.FIELD_WINDCHILL]: parseFloat(measurement.windchill),
-      [WIND_DATA.FIELD_WINDDIR]: parseInt(measurement.winddir),
+      [WIND_DATA.FIELD_WINDSPEED]: { int: parseInt(measurement.windspeed) },
+      [WIND_DATA.FIELD_WINDCHILL]: { float: parseFloat(measurement.windchill) },
+      [WIND_DATA.FIELD_WINDDIR]: { int: parseInt(measurement.winddir) },
     },
   };
 
@@ -137,9 +148,9 @@ const TRANSFORMER: DataTransformer = (_topic: string, message: string) => {
       [RAIN_DATA.TAG_DEVICE_LOCATION]: "Garten",
     },
     fields: {
-      [RAIN_DATA.FIELD_RAIN_10]: parseFloat(measurement.rain10),
-      [RAIN_DATA.FIELD_RAIN_H]: parseFloat(measurement.rainh),
-      [RAIN_DATA.FIELD_RAIN_D]: parseFloat(measurement.raind),
+      [RAIN_DATA.FIELD_RAIN_10]: { float: parseFloat(measurement.rain10) },
+      [RAIN_DATA.FIELD_RAIN_H]: { float: parseFloat(measurement.rainh) },
+      [RAIN_DATA.FIELD_RAIN_D]: { float: parseFloat(measurement.raind) },
     },
   };
 
@@ -154,7 +165,9 @@ const TRANSFORMER: DataTransformer = (_topic: string, message: string) => {
       [POWER_DATA.TAG_DEVICE_INOUT]: "out",
     },
     fields: {
-      [POWER_DATA.FIELD_LOW_BAT]: Boolean(JSON.parse(measurement.lowbat1)),
+      [POWER_DATA.FIELD_LOW_BAT]: {
+        boolean: Boolean(JSON.parse(measurement.lowbat1)),
+      },
     },
   };
 
@@ -169,7 +182,9 @@ const TRANSFORMER: DataTransformer = (_topic: string, message: string) => {
       [POWER_DATA.TAG_DEVICE_INOUT]: "out",
     },
     fields: {
-      [POWER_DATA.FIELD_LOW_BAT]: Boolean(JSON.parse(measurement.lowbat2)),
+      [POWER_DATA.FIELD_LOW_BAT]: {
+        boolean: Boolean(JSON.parse(measurement.lowbat2)),
+      },
     },
   };
 
@@ -184,7 +199,9 @@ const TRANSFORMER: DataTransformer = (_topic: string, message: string) => {
       [POWER_DATA.TAG_DEVICE_INOUT]: "out",
     },
     fields: {
-      [POWER_DATA.FIELD_LOW_BAT]: Boolean(JSON.parse(measurement.lowbat4)),
+      [POWER_DATA.FIELD_LOW_BAT]: {
+        boolean: Boolean(JSON.parse(measurement.lowbat4)),
+      },
     },
   };
 

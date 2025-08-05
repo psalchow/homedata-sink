@@ -2,7 +2,6 @@ import {
   createClient,
   RedisClientType,
   RedisFunctions,
-  RedisModules,
   RedisScripts,
 } from "@redis/client";
 import RedisJsonModule from "@redis/json";

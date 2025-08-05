@@ -1,7 +1,7 @@
 import { Agent } from "http";
 import { InfluxDB, Point, WriteApi } from "@influxdata/influxdb-client";
 import { INFLUX_BUCKET, INFLUX_ORG, INFLUX_TOKEN, INFLUX_URL } from "./env";
-import { GenericData } from "./types";
+import { GenericData, TypedValue } from "./types";
 import { PRIMARY_KEY } from "./const";
 
 let keepAliveAgent: Agent | undefined;
@@ -72,19 +72,21 @@ const mapToPoints = (generic: GenericData[]) =>
     }
 
     // write fields
-    Object.entries(data.fields).forEach(([fieldName, fieldValue]) => {
-      if (typeof fieldValue == "string") {
-        point.stringField(fieldName, fieldValue);
-      } else if (typeof fieldValue == "number") {
-        if (Number.isSafeInteger(fieldValue)) {
-          point.intField(fieldName, fieldValue);
+    Object.entries(data.fields).forEach(
+      ([fieldName, fieldValue]: [string, TypedValue]) => {
+        if ("string" in fieldValue) {
+          point.stringField(fieldName, fieldValue.string);
+        } else if ("int" in fieldValue) {
+          point.intField(fieldName, fieldValue.int);
+        } else if ("float" in fieldValue) {
+          point.floatField(fieldName, fieldValue.float);
+        } else if ("boolean" in fieldValue) {
+          point.booleanField(fieldName, fieldValue.boolean);
         } else {
-          point.floatField(fieldName, fieldValue);
+          console.warn(`Unknown field type for ${fieldName}:`, fieldValue);
         }
-      } else if (typeof fieldValue == "boolean") {
-        point.booleanField(fieldName, fieldValue);
-      }
-    });
+      },
+    );
     return point;
   });
 
