@@ -56,7 +56,7 @@ export class MqttService<ConfigType> {
       this.client.unsubscribe(this.topicNames, (error) => {
         console.log(`Unsubscribing from topics '${this.topicNames}'`);
         if (error) {
-          console.error(`Error while unsubscribing from topics':`, error);
+          console.error(`Error while unsubscribing from topics:`, error);
         }
       });
       this.client.end(() => {
