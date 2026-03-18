@@ -11,15 +11,15 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@influxdata/influxdb-client": "^1.35.0",
+    "@influxdata/influxdb3-client": "^2.1.0",
     "@redis/client": "^1.6.0",
     "@redis/json": "^1.0.7",
-    "mqtt": "^5.14.0"
+    "mqtt": "^5.15.0"
   },
   "devDependencies": {
-    "@types/node": "^24.2.0",
-    "esbuild": "0.25.8",
-    "prettier": "^3.6.2",
-    "typescript": "^5.9.2"
+    "@types/node": "^25.5.0",
+    "esbuild": "0.27.4",
+    "prettier": "^3.8.1",
+    "typescript": "^5.9.3"
   }
 }

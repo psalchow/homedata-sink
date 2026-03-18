@@ -15,7 +15,14 @@ const mqttService = new MqttService(
     const transformer = transformerConfig[1];
     const data = transformer(topic, message);
     if (data.timeseries) {
-      InfluxService.writeData(data.timeseries);
+      InfluxService.writeData(data.timeseries).then(
+        () =>
+          console.log(
+            `Successfully wrote data from topic '${topic}' to Influx`,
+          ),
+        () =>
+          console.error(`Failed to write data from topic '${topic}' to Influx`),
+      );
     }
 
     if (data.lvc) {
